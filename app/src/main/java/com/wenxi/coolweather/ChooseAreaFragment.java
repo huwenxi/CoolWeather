@@ -98,11 +98,13 @@ public class ChooseAreaFragment extends Fragment implements View.OnClickListener
                     queryCountys();//查询选中的城市下所有的县
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(i).getWeatherId();
+                    //如果fragment在MainActivity中，直接开启WeatherActivity
                     if (getActivity() instanceof MainActivity) {
                         Intent intent = new Intent(getActivity(), WeatherActivity.class);
                         intent.putExtra("weather_id", weatherId);
                         startActivity(intent);
                         getActivity().finish();
+                        //如果fragment在WeatherActivity中，就关闭侧滑菜单，显示下来刷新，请求新的天气信息
                     }else if (getActivity() instanceof WeatherActivity){
                         WeatherActivity activity = (WeatherActivity) getActivity();
                         activity.drawerLayout.closeDrawers();

@@ -169,39 +169,41 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
      * 处理并展示weather实体类的数据
      */
     private void showWeatherInfo(Weather weather) {
-        String cityName = weather.basic.cityName;
-        String updateTime = weather.basic.update.updateTime.split(" ")[1];
-        String degree = weather.now.temperature + "℃";
-        String weatherInfo = weather.now.more.info;
-        title_city.setText(cityName);
-        title_update_time.setText(updateTime);
-        degree_tv.setText(degree);
-        weather_info_tv.setText(weatherInfo);
-        forecast_layout.removeAllViews();
-        for (Forecast forecast : weather.forecastList) {
-            View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecast_layout, false);
-            TextView dateTv = (TextView) view.findViewById(R.id.date_tv);
-            TextView infoTv = (TextView) view.findViewById(R.id.info_tv);
-            TextView maxTv = (TextView) view.findViewById(R.id.max_tv);
-            TextView minTv = (TextView) view.findViewById(R.id.min_tv);
-            dateTv.setText(forecast.date);
-            infoTv.setText(forecast.more.info);
-            maxTv.setText(forecast.tempeRature.max);
-            minTv.setText(forecast.tempeRature.min);
-            forecast_layout.addView(view);
-        }
-        if (weather.aqi != null) {
-            aqi_tv.setText(weather.aqi.city.aqi);
-            pm25_tv.setText(weather.aqi.city.pm25);
-        }
-        String comfort = "舒适度：" + weather.suggestion.comfort.info;
-        String carWash = "洗车指数：" + weather.suggestion.carWash.info;
-        String sport = "运动建议：" + weather.suggestion.sport.info;
-        comfort_tv.setText(comfort);
-        car_wash_tv.setText(carWash);
-        sport_tv.setText(sport);
-        weather_layout.setVisibility(View.VISIBLE);
+        if (weather != null && "ok".equals(weather.status)) {
+            String cityName = weather.basic.cityName;
+            String updateTime = weather.basic.update.updateTime.split(" ")[1];
+            String degree = weather.now.temperature + "℃";
+            String weatherInfo = weather.now.more.info;
+            title_city.setText(cityName);
+            title_update_time.setText(updateTime);
+            degree_tv.setText(degree);
+            weather_info_tv.setText(weatherInfo);
+            forecast_layout.removeAllViews();
+            for (Forecast forecast : weather.forecastList) {
+                View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecast_layout, false);
+                TextView dateTv = (TextView) view.findViewById(R.id.date_tv);
+                TextView infoTv = (TextView) view.findViewById(R.id.info_tv);
+                TextView maxTv = (TextView) view.findViewById(R.id.max_tv);
+                TextView minTv = (TextView) view.findViewById(R.id.min_tv);
+                dateTv.setText(forecast.date);
+                infoTv.setText(forecast.more.info);
+                maxTv.setText(forecast.tempeRature.max);
+                minTv.setText(forecast.tempeRature.min);
+                forecast_layout.addView(view);
+            }
+            if (weather.aqi != null) {
+                aqi_tv.setText(weather.aqi.city.aqi);
+                pm25_tv.setText(weather.aqi.city.pm25);
+            }
+            String comfort = "舒适度：" + weather.suggestion.comfort.info;
+            String carWash = "洗车指数：" + weather.suggestion.carWash.info;
+            String sport = "运动建议：" + weather.suggestion.sport.info;
+            comfort_tv.setText(comfort);
+            car_wash_tv.setText(carWash);
+            sport_tv.setText(sport);
+            weather_layout.setVisibility(View.VISIBLE);
 
+        }
     }
 
     /**
